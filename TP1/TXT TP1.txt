@@ -22,9 +22,11 @@ brutToNet2 = function(s_br,statut) {
          
  }
 
-2.1.3
+2.1.3 (library(dplyr))
 
 brutToNet3 = function(sbr, statut, tx_prelev = 7.5, tp_travail = 100) { 
+     if ((between(tx_prelev,0,100))==FALSE | (between(tp_travail,0,100))==FALSE) {
+         return("ERROR : rate and time must be in range(0,100)")}
      if (statut == "cadre") {
          snet_av = sbr * tp_travail / 100 * 0.75 
          snet_apr = snet_av*(1 - tx_prelev / 100)
@@ -35,3 +37,32 @@ brutToNet3 = function(sbr, statut, tx_prelev = 7.5, tp_travail = 100) {
          return(list(snet_av,snet_apr))}
      
  }
+
+2.4
+
+pfc = function(nbparties) {
++     for (i in 1:nbparties) {
++         choix = readline(prompt = "Pierre, Feuille, ou Ciseaux :")
++         ai_choice = sample(x = c("Pierre","Feuille","Ciseaux"),size = 1)
++         if (choix==ai_choice) {
++             print("Egalité")
++         } else if (choix=="Pierre" & ai_choice=="Feuille") {
++             print(paste("Ordi gagne avec",ai_choice))
++         } else if (choix=="Pierre" & ai_choice=="Ciseaux") {
++             print(paste("j1 gagne contre",ai_choice))
++             victoires=victoires+1
++         } else if (choix=="Ciseaux" & ai_choice=="Feuille") {
++             print(paste("j1 gagne contre",ai_choice))
++             victoires=victoires+1
++         } else if (choix=="Ciseaux" & ai_choice=="Pierre") {
++             print(paste("Ordi gagne avec",ai_choice))
++         } else if (choix=="Feuille" & ai_choice=="Pierre") {
++             print(paste("j1 gagne contre",ai_choice))
++             victoires=victoires+1
++         } else {
++             print(paste("Ordi gagne avec",ai_choice))
++         }
++     }
++ }
+> return(victoires)
+
