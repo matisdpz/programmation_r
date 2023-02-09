@@ -1,0 +1,173 @@
+I.a) 
+pokemon <- read_excel("C:/Users/bluez/OneDrive/Bureau/IUT/Programmation statistique R/TP2/dataset/pokemon.xlsx",sheet = "pokemon")
+
+b)
+> nrow(pokemon) / Nombre de lignes : 251
+[1] 251
+> ncol(pokemon) / Nombre de colonnes : 10
+[1] 10
+
+c)
+colnames(pokemon)
+ [1] "pokedex_number" "nom"            "generation"     "is_legendary"  
+ [5] "type"           "weight_kg"      "height_m"       "attack"        
+ [9] "defense"        "speed" 
+
+d)
+
+str(pokemon)
+$ pokedex_number: num [1:251] 1 2 3 4 5 6 7 8 9 10 ...
+ $ nom           : chr [1:251] "Bulbizarre" "Herbizarre" "Florizarre" "Salameche" ...
+ $ generation    : num [1:251] 1 1 1 1 1 1 1 1 1 1 ...
+ $ is_legendary  : chr [1:251] "Non" "Non" "Non" "Non" ...
+ $ type          : chr [1:251] "grass" "grass" "grass" "fire" ...
+ $ weight_kg     : num [1:251] 6.9 13 100 8.5 19 90.5 9 22.5 85.5 2.9 ...
+ $ height_m      : num [1:251] 0.7 1 2 0.6 1.1 1.7 0.5 1 1.6 0.3 ...
+ $ attack        : num [1:251] 49 62 100 52 64 104 48 63 103 30 ...
+ $ defense       : num [1:251] 49 63 123 43 58 78 65 80 120 35 ...
+ $ speed         : num [1:251] 45 60 80 65 80 100 43 58 78 45 ... 
+
+e)
+> pokemon$generation=as.factor(pokemon$generation)
+> pokemon$type=as.factor(pokemon$type)
+> pokemon$is_legendary=as.factor(pokemon$is_legendary)
+
+f)
+
+> levels(pokemon$is_legendary)
+[1] "Non" "Oui" / 2 levels pour is_legendary
+
+> levels(pokemon$generation)
+[1] "1" "2" / 2 levels pour generation
+
+> levels(pokemon$type)
+ [1] "bug"      "dark"     "dragon"   "electric" "fairy"    "fighting"
+ [7] "fire"     "ghost"    "grass"    "ground"   "ice"      "normal"  
+[13] "poison"   "psychic"  "rock"     "steel"    "water"   / 17 levels pour generation
+
+g)
+
+summary(pokemon) / Résumé
+
+II.
+
+a)
+> mean(pokemon$weight_kg, na.rm=T)
+[1] 47.23433 / Moyenne sans les "NA"
+
+b)
+> median(pokemon$weight_kg, na.rm=T)
+[1] 29
+
+c)
+> quantile(pokemon$height_m, na.rm=T)
+  0%  25%  50%  75% 100% 
+ 0.2  0.6  1.0  1.5  9.2 
+
+d)
+> quantile(pokemon$height_m, na.rm=T, probs=seq(0,1,0.1))
+
+  0%  10%  20%  30%  40%  50%  60% 
+0.20 0.40 0.60 0.70 0.90 1.00 1.20 
+ 70%  80%  90% 100% 
+1.40 1.60 1.88 9.20 
+
+e)
+> var(pokemon$weight_kg,na.rm=T)
+[1] 3734.643
+> sd(pokemon$weight_kg,na.rm=T)
+[1] 61.11172
+
+f)
+TRI A PLAT VARIABLE "generation" :
+> freq(pokemon$generation,valid=FALSE, sort="dec")
+    n    % 
+1 151 60.2 
+2 100 39.8
+
+TRI A PLAT VARIABLE "is_legendary" :
+> freq(pokemon$is_legendary,valid=FALSE, sort="dec")
+      n    %
+Non 240 95.6
+Oui  11  4.4
+
+TRI A PLAT VARIABLE "type" :
+freq(pokemon$type,valid=FALSE, sort="dec")
+          n    % 
+water    46 18.3 
+normal   37 14.7 
+bug      22  8.8  
+grass    21  8.4  
+fire     20  8.0  
+electric 15  6.0  
+poison   15  6.0  
+psychic  15  6.0  
+rock     13  5.2  
+ground   11  4.4  
+fighting  9  3.6  
+fairy     7  2.8  
+ice       6  2.4  
+dark      5  2.0  
+ghost     4  1.6  
+dragon    3  1.2  
+steel     2  0.8  
+
+III.
+
+a)
+req_a=pokemon[c("nom","is_legendary")]
+> dim(req_a)
+[1] 251   2
+
+b)
+> req_b=pokemon[1:50,1:2]
+> dim(req_b)
+[1] 50  2
+
+c)
+req_c=pokemon[1:10,1:ncol(pokemon)]
+> dim(req_c)
+[1] 10 11
+
+d)
+> req_d=pokemon[,-11]
+> dim(req_d)
+[1] 251  10
+
+e)
+> rang=order(pokemon$nom)
+> requete_E=pokemon[rang, ]
+> requete_E[1,2]
+  nom  
+  <chr>
+1 Abo  
+
+f)
+> rang=order(pokemon$weight_kg, decreasing = T)
+> requete_F=pokemon[rang, ]
+> requete_F[1,2]
+  nom    
+  <chr>  
+1 Ronflex
+
+g)
+> rang=order(pokemon$attack, decreasing = T, pokemon$speed)
+> requete_G=pokemon[rang, ]
+> requete_G[1:10,2]
+# A tibble: 10 × 1
+   nom       
+   <chr>     
+ 1 Scarhino  
+ 2 Tyranocif 
+ 3 Scarabrute
+ 4 Leviator  
+ 5 Dardargnan
+ 6 Mewtwo    
+ 7 Cizayox   
+ 8 Ptera     
+ 9 Dracolosse
+10 Ho-Oh 
+
+IV
+
+a)
